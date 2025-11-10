@@ -33,8 +33,6 @@ export default function Signup() {
                 <input placeholder='email' {...register('lastName')} />
                 <input placeholder='email' {...register('email')} />
                 <input placeholder='password' type="password" {...register('password')} />
-                <input type="radio"  value="admin" {...register('role', { required: true })} />
-                <input type="radio" value="user" {...register('role', { required: true })}/>
                 <SpinnerButton
                     buttonText='Signup'
                     loadingText='signing up'

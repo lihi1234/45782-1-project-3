@@ -4,6 +4,7 @@ import Login from "../../auth/login/Login";
 // import Feed from "../../vacations/feed/Feed";
 import NotFound from "../not-found/NotFound";
 import Signup from "../../auth/signup/Signup";
+import VacationsPage from "../../vacations-page/vacationsPage";
 // import EditPost from "../../vacations/edit/EditPost";
 
 export default function Main() {
@@ -15,6 +16,7 @@ export default function Main() {
 
                 <Route path="/" element={<Login />}/>
                 <Route index element={<Login />} />          {/* Default for / */}
+                <Route path="vacations" element={<VacationsPage/>}/>
                 <Route path="signup" element={<Signup />} /> {/* /signup */}
 
                 {/* <Route path="/profile/edit/:id" element={<EditPost />} />

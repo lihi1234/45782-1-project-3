@@ -1,6 +1,6 @@
 {
     "app": {
-        "secret": "APP_SECRET",
+        "secret": "bts",
         "jwtSecret": "JWT_SECRET"
     },
     "db": {

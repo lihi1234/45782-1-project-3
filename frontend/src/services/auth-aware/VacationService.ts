@@ -1,8 +1,8 @@
 import type VacationDraft from "../../models/vacation-draft";
-import type Vacation from "../../models/vacation-draft";
+import type Vacation from "../../models/vacation";
 import AuthAware from "./AuthAware";
 
-export default class ProfileService extends AuthAware {
+export default class VacationService extends AuthAware {
 
     async getAllVacations(): Promise<Vacation[]> {
         const response = await this.axiosInstance.get<Vacation[]>(`/vacations`);

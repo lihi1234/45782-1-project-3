@@ -7,6 +7,6 @@ export enum Role {
 
 export default interface Signup extends Login{
     firstName: string,
-    lastName: string,
-    role: Role
+    lastName: string
+   
 }

@@ -38,6 +38,7 @@ export default class User extends Model {
     password: string
 
     @AllowNull(false)
+    @Default(Role.User)
     @Column(DataType.ENUM(...Object.values(Role)))
     role: Role
 
