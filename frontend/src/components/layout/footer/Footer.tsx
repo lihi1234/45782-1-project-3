@@ -1,5 +1,5 @@
 import './Footer.css';
-import useUsername from '../../../hooks/use-username';
+import useUsername from '../../../hooks/use-user-role';
 
 export default function Footer() {
 

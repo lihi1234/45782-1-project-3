@@ -8,15 +8,8 @@ import { useAppDispatcher, useAppSelector } from '../../redux/hooks';
 import Spinner from '../common/spinner/Spinner';
 import { init, vacationAged } from '../../redux/vacation-slice';
 import Vacation from '../vacation/vacation';
-// import Vacation from '../../models/vacation'
-// import Post from '../post/Post';
-// // import NewPost from '../new/NewPost';
-// import Spinner from '../../../common/spinner/Spinner';
-// import useTitle from '../../../hooks/use-title';
-// import { useAppDispatcher, useAppSelector } from '../../../redux/hooks';
-// import { init, postAged } from '../../../redux/profile-slice';
-// import useService from '../../../hooks/use-service';
-// import ProfileService from '../../../services/auth-aware/ProfileService';
+import useUserRole from '../../hooks/use-user-role';
+
 
 export default function VacationsPage() {
 
@@ -27,21 +20,26 @@ export default function VacationsPage() {
     const newVacation = useAppSelector(state => state.vacationSlice.newVacation);
     const vacationsPage = useAppSelector(state => state.vacationSlice.vacations);
     const dispatch = useAppDispatcher();
+    // console.log(useAppSelector(state => state))
+
+      const userRole= useUserRole();
+       
 
     useEffect(() => {
         (async () => {
             try {
-                if(vacationsPage){
+                
                 if (vacationsPage.length === 0) {
                     const vacationFromServer = await vacationService.getAllVacations();
+                    // console.log(vacationFromServer)
                     dispatch(init(vacationFromServer));
                 }
-                }
+                
             } catch (e) {
                 alert(e);
             }
         })();
-    }, [dispatch, vacationsPage.length]);
+    }, [dispatch, vacationService, vacationsPage]);
 
     useEffect(() => {
         if (newVacation) {
@@ -64,7 +62,7 @@ export default function VacationsPage() {
                 {vacationsPage.map(vacation => <Vacation
                     key={vacation.id}
                     vacation={vacation}
-                    isEditAllowed={false}
+                    isEditAllowed={    userRole==='admin'}
                 />)}
             {/* </>} */}
              {vacationsPage.length === 0 && <Spinner />}

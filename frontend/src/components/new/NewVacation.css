@@ -1,0 +1,9 @@
+.NewVacation {
+    border: 1px dashed lightskyblue;
+    margin: 6px;
+}
+
+.NewVacation form {
+    display: flex;
+    flex-direction: column;
+}

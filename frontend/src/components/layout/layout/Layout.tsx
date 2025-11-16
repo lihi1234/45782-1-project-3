@@ -30,7 +30,7 @@ export default function Layout() {
                 </footer>
             </>}
 
-            <Login /> 
+           {!isLoggedIn &&<Login /> } 
         </div>
     );
 }

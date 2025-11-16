@@ -8,5 +8,5 @@ export default interface VacationDraft  {
     destination: string,
     description: string,
     price: number,
-    userLikes: Like[]
+    likes: Like[]
 }
