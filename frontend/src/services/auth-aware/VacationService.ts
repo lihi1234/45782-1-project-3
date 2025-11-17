@@ -15,7 +15,10 @@ export default class VacationService extends AuthAware {
     }
 
     async newVacation(draft: VacationDraft): Promise<Vacation> {
-        const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft);
+        const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft,  {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }});
         return response.data;
     }
 

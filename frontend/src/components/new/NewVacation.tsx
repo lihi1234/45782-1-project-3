@@ -26,6 +26,8 @@ export default function NewVacation() {
 
 
     async function submit(draft: VacationDraft) {
+                draft.image = (draft.image as unknown as FileList)[0];
+
         try {
             setIsSubmitting(true);
             const vacation = await vacationService.newVacation(draft);
@@ -85,8 +87,8 @@ export default function NewVacation() {
                     />
                     <div className='formError'>{formState.errors.price?.message}</div>
 
-                    <input type='url' {...register('imageUrl')} />
-                    <div className='formError'>{formState.errors.imageUrl?.message}</div>
+                <input type="file" {...register('image')}/>
+                    <div className='formError'>{formState.errors.image?.message}</div>
 
 
                 <SpinnerButton

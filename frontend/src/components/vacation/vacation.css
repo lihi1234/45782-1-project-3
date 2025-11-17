@@ -1,48 +1,138 @@
+/* הקונטיינר של כל כרטיס חופשה */
 .Vacation {
-    display: flex;
-    flex-direction: column;
-    border: 1px dashed lightcoral;
-    margin: 6px;
+  width: 300px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(178, 141, 255, 0.25);
+  border: 1px solid #ffd4e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+  animation: fadeIn 0.6s ease;
 }
 
-.Vacation img {
-    height: 100%;
+/* אנימציית כניסה */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+.Vacation:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 26px rgba(255, 143, 177, 0.35);
+}
+
+/* כרטיס שמסומן כחדש */
+.new-vacation {
+  border: 2px solid #ff8fb1;
+  animation: glow 1.4s ease infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 12px rgba(255, 143, 177, 0.3); }
+  to { box-shadow: 0 0 20px rgba(178, 141, 255, 0.45); }
+}
+
+/* כותרת */
+.Vacation h3 {
+  font-size: 1.4rem;
+  color: #7a3e9d;
+  text-align: center;
+  margin: 0;
+}
+
+/* הטקסטים */
+.Vacation div {
+  font-size: 0.95rem;
+  color: #3a2e4e;
+  text-align: center;
+}
+
+/* מספר לייקים */
 .Vacation div:nth-child(2) {
-    text-decoration: underline;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: #ffe3f0;
+  color: #b54b89;
+  padding: 6px 14px;
+  border-radius: 12px;
 }
 
-.Vacation div:nth-child(3) {
-    padding: 12px 0px;
+/* תמונה */
+.Vacation img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(255, 143, 177, 0.25);
 }
 
-.new-Vacation {
-    animation-name: paintYellow;
-    animation-duration: 4s;
-    /* Total animation duration */
-    animation-fill-mode: forwards;
-    /* Keep the final state after animation */
+/* כפתורים */
+.Vacation button {
+  padding: 8px 12px;
+  margin: 4px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: 0.2s ease;
 }
 
-@keyframes paintYellow {
-    0% {
-        background-color: initial;
-        /* Or your starting color */
-    }
+.Vacation button:first-child {
+  background: #ff5f8f;
+  color: white;
+}
 
-    25% {
-        background-color: yellow;
-        /* Start turning yellow */
-    }
+.Vacation button:first-child:hover {
+  background: #ff326e;
+}
 
-    75% {
-        background-color: yellow;
-        /* Stay yellow */
-    }
+.Vacation button:last-child {
+  background: #b28dff;
+  color: white;
+}
 
-    100% {
-        background-color: initial;
-        /* Or your ending color, fades back */
-    }
+.Vacation button:last-child:hover {
+  background: #9f75ff;
+}
+/* תיאור החופשה */
+.v-description {
+  font-size: 0.95rem;
+  color: #5a466e;
+  padding: 12px 16px;
+  background: #fdf0ff;
+  border-left: 4px solid #d79cff;
+  border-radius: 12px;
+  line-height: 1.4;
+  box-shadow: inset 0 0 4px rgba(210, 160, 255, 0.3);
+  width: 100%;
+  text-align: left;
+}
+
+/* תאריכים */
+.v-dates {
+  font-size: 0.9rem;
+  background: #ffe8f3;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: #b24d7b;
+  font-weight: 600;
+  display: inline-block;
+  box-shadow: 0 3px 7px rgba(255, 170, 200, 0.25);
+}
+
+/* מחיר */
+.v-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #7a3e9d;
+  background: linear-gradient(90deg, #ffd4e5, #e6d1ff);
+  padding: 10px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(197, 140, 255, 0.4);
+  margin-top: 8px;
 }

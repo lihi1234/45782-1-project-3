@@ -1,4 +1,101 @@
-html,
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* IMPORTANT */
+}
+
+.Layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    180deg,
+    #ffe9f6 0%,
+    #f8e8ff 40%,
+    #ffffff 100%
+  );
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header */
+header {
+  background: linear-gradient(90deg, #ffb7dd, #d5b3ff);
+  box-shadow: 0 4px 12px rgba(180, 130, 255, 0.2);
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Main content */
+main {
+  flex: 1;
+  padding: 30px 18px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+
+  animation: fadeIn 0.4s ease;
+}
+
+/* Footer */
+footer {
+  background: linear-gradient(90deg, #ffcceb, #e5cdff);
+  padding: 12px 0;
+  margin-top: auto;
+  text-align: center;
+  color: #5a3d70;
+  font-weight: 600;
+  border-top: 2px solid #d79aff;
+  box-shadow: 0 -3px 10px rgba(210, 150, 255, 0.25);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  main {
+    padding: 20px 12px;
+  }
+
+  header, footer {
+    padding: 10px 12px;
+  }
+
+  .Layout {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    padding: 15px 8px;
+  }
+
+  header, footer {
+    padding: 8px 10px;
+  }
+
+  .Layout {
+    font-size: 13px;
+  }
+}
+
+
+/* html,
 body,
 #root {
     margin: 0;
@@ -8,37 +105,23 @@ body,
 
 .Layout {
     display: grid;
-    /* grid-template-columns: 1fr 3fr; */
     grid-template-rows: 2fr 8fr 1fr;
     height: 100%;
 }
 
 .Layout header {
     grid-row: 1;
-    /* grid-column: 1 / span 2; */
 }
 
 .Layout footer {
     grid-row: 3;
-    /* grid-column: 1 / span 2; */
 }
-/* 
-.Layout aside:nth-child(0) {
-    grid-row: 2;
-    grid-column: 1;
-}
-
-.Layout aside:nth-child(1) {
-    grid-row: 3;
-    grid-column: 1;
-} */
 
 .Layout main {
     grid-row: 2 ;
-    /* grid-column: 2; */
     overflow: scroll;
 }
 
 .Layout>* {
     border: 1px dashed lightblue;
-}
+} */

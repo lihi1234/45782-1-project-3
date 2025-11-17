@@ -1,0 +1,62 @@
+/* Report.css */
+.Report {
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff0f5; /* light pink/purple background */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.Report h2 {
+  color: #800080; /* dark purple */
+  margin-bottom: 1.5rem;
+}
+
+.Report p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.Report button {
+  background: linear-gradient(90deg, #ffb6c1, #dda0dd);
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.Report button:hover {
+  background: linear-gradient(90deg, #dda0dd, #ffb6c1);
+  transform: translateY(-2px);
+}
+
+/* Chart container for responsiveness */
+.Report canvas {
+  max-width: 100%;
+  height: auto !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .Report {
+    padding: 0.8rem;
+  }
+
+  .Report h2 {
+    font-size: 1.5rem;
+  }
+
+  .Report button {
+    width: 100%;
+    font-size: 1rem;
+  }
+}

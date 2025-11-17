@@ -1,3 +1,30 @@
-.SpinnerButton i img {
-    height: 16px;
+.SpinnerButton {
+  display: inline-block;
+}
+
+.SpinnerButton button,
+.SpinnerButton span {
+  background-color: #ff69b4; /* soft pink */
+  color: white;
+  border: none;
+  border-radius: 50px; /* pill-shaped */
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.SpinnerButton button:hover,
+.SpinnerButton span:hover {
+  background-color: #ff85c1;
+  transform: translateY(-2px);
+}
+
+.SpinnerButton img {
+  width: 20px;
+  height: 20px;
 }

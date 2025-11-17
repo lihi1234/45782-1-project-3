@@ -51,14 +51,7 @@ export default function VacationsPage() {
 
     return (
         <div className='VacationPage'>
-            {/* {vacationsPage.length > 0 && <>
-                <NewPost />
-                {newPost && <Post
-                    key={newPost.id}
-                    post={newPost}
-                    isEditAllowed={true}
-                    isNew={true}
-                />} */}
+     
                 {vacationsPage.map(vacation => <Vacation
                     key={vacation.id}
                     vacation={vacation}

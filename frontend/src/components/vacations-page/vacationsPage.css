@@ -1,0 +1,85 @@
+/* רקע כללי */
+.VacationPage {
+  min-height: 100vh;
+  padding: 40px 5%;
+  background: linear-gradient(
+    135deg,
+    #fff5fa 0%,
+    #fce9ff 50%,
+    #ffeaf2 100%
+  );
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  animation: fadeIn 0.8s ease;
+}
+
+/* אנימציית כניסה עדינה */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ספינר באמצע העמוד */
+.VacationPage .spinner-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+/* כרטיס בודד - הקומפוננטה Vacation תוכל לעטוף את עצמה בקלאס card אם תרצי */
+.vacation-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 18px;
+  width: 300px;
+  box-shadow: 0 6px 16px rgba(178, 141, 255, 0.25);
+  border: 1px solid #ffd4e5;
+  transition: 0.25s ease;
+}
+
+.vacation-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(255, 143, 177, 0.35);
+}
+
+/* טקסטים כלליים */
+.vacation-title {
+  font-size: 1.4rem;
+  color: #7a3e9d;
+  font-weight: 600;
+}
+
+.vacation-description {
+  margin-top: 8px;
+  color: #3a2e4e;
+  font-size: 0.95rem;
+}
+
+/* מחיר */
+.vacation-price {
+  color: #ff8fb1;
+  font-weight: 700;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+/* כפתור (למחיקה/עריכה/לייקים) */
+.vacation-button {
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff8fb1, #b28dff);
+  color: white;
+  font-weight: 600;
+  transition: 0.2s ease;
+  margin-top: 14px;
+}
+
+.vacation-button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}

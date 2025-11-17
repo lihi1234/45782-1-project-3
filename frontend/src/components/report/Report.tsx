@@ -3,7 +3,7 @@ import VacationService from '../../services/auth-aware/VacationService';
 import useService from '../../hooks/use-service';
 import { init } from '../../redux/vacation-slice';
 import { useAppDispatcher, useAppSelector } from '../../redux/hooks';
-
+import './report.css'
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -106,6 +106,7 @@ const Report: React.FC = () => {
 
 
   return (
+    <div className="Report">
     <div style={{ width: '80%', margin: '0 auto' }}>
       <h2>Vacation Likes Dashboard</h2>
       {vacations.length === 0 ? (
@@ -118,6 +119,7 @@ const Report: React.FC = () => {
       <button  onClick={exportCSV}>
         Download CSV
       </button>
+    </div>
     </div>
 
     

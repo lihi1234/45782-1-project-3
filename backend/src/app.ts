@@ -6,6 +6,8 @@ import config from 'config'
 import sequelize from './db/sequelize';
 import cors from 'cors'
 import authRouter from './routers/auth'
+import { createAppBucketIfNotExists, testUpload } from './aws/aws';
+
 // import categoriesRouter from './routers/categories'
 // import productsRouter from './routers/products'
 
@@ -34,13 +36,21 @@ app.use(notFound)
 
 // error middlewares
 app.use(logger)
-app.use(responder)
+app.use(responder);
 
 // synchronize database schema (not data) changes to the database
 // i.e syncs our TypeScript models folder into the actual SQL Schema
 // sequelize.sync({ force: true })
-sequelize.sync({ force: process.argv[2] === 'sync' })
+(async () => {
+    // synchronize database schema (not data) changes to the database
+    // i.e syncs our TypeScript models folder into the actual SQL Schema
+    // sequelize.sync({ force: true })
+    await sequelize.sync({ force: process.argv[2] === 'sync' })
 
-console.log(process.argv)
+    await createAppBucketIfNotExists()
+    // testUpload()
 
-app.listen(port, () => console.log(`${appName} started on port ${port}`))
+    console.log(process.argv)
+
+    app.listen(port, () => console.log(`${appName} started on port ${port}`))
+})()

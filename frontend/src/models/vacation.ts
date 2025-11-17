@@ -2,5 +2,6 @@ import type VacationDraft from "./vacation-draft"
 
 
 export default interface Vacation extends VacationDraft {
-    id: string
+    id: string,
+    imageUrl: string
 }

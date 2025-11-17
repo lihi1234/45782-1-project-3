@@ -6,15 +6,21 @@ import type LoginModel from '../../../models/login';
 import authService from '../../../services/auth';
 import AuthContext from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
+// import { Route } from "react-router-dom";
+// import Signup from "../../auth/signup/Signup";
+
+
 
 export default function Login() {
+
+    // <Route path="/signup" element={<Signup />} />;
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const { register, handleSubmit } = useForm<LoginModel>();
 
     const authContext = useContext(AuthContext);
-      const navigate = useNavigate(); // <-- initialize navigate
+    const navigate = useNavigate(); // <-- initialize navigate
 
 
     async function submit(login: LoginModel) {
@@ -31,7 +37,7 @@ export default function Login() {
 
 
     const goToSignup = () => {
-        navigate('/signup'); 
+        navigate('/signup');
     };
 
     return (

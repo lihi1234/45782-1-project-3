@@ -19,7 +19,7 @@ type VacationFormValues = {
     startedAt: string; // string for <input type="date">
     endedAt: string;   // string for <input type="date">
     price: number;
-    imageUrl: string;
+    image: File;
 };
 
 export default function EditVacation() {
@@ -39,7 +39,7 @@ export default function EditVacation() {
             startedAt: '',
             endedAt: '',
             price: 0,
-            imageUrl: ''
+            image: undefined
         }
     });
 
@@ -65,7 +65,7 @@ export default function EditVacation() {
             startedAt: new Date(vacation.startedAt).toISOString().split('T')[0],
             endedAt: new Date(vacation.endedAt).toISOString().split('T')[0],
             price: vacation.price,
-            imageUrl: vacation.imageUrl
+            image: vacation.image
         };
 
         reset(draft);
@@ -141,8 +141,8 @@ export default function EditVacation() {
                     />
                     <div className='formError'>{formState.errors.price?.message}</div>
 
-                    <input type='url' {...register('imageUrl')} />
-                    <div className='formError'>{formState.errors.imageUrl?.message}</div>
+                <input type="file" {...register('image')}/>
+                    <div className='formError'>{formState.errors.image?.message}</div>
 
                     <SpinnerButton
                         buttonText='Update Vacation'

@@ -14,10 +14,10 @@ export default function Signup() {
 
     const authContext = useContext(AuthContext);
 
-    async function submit(login: SignupModel) {
+    async function submit(signup: SignupModel) {
         try {
             setIsSubmitting(true);
-            const { jwt } = await authService.login(login);
+            const { jwt } = await authService.signup(signup);
             authContext?.newJwt(jwt);
         } catch (e) {
             alert(e);
@@ -30,7 +30,7 @@ export default function Signup() {
         <div className='Signup'>
             <form onSubmit={handleSubmit(submit)}>
                 <input placeholder='first name' {...register('firstName')} />
-                <input placeholder='email' {...register('lastName')} />
+                <input placeholder='last name' {...register('lastName')} />
                 <input placeholder='email' {...register('email')} />
                 <input placeholder='password' type="password" {...register('password')} />
                 <SpinnerButton

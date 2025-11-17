@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Nov 05, 2025 at 01:26 PM
+-- Generation Time: Nov 17, 2025 at 12:22 PM
 -- Server version: 9.4.0
 -- PHP Version: 8.2.27
 
@@ -74,7 +74,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('user','admin') NOT NULL
+  `role` enum('user','admin') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -82,11 +82,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`) VALUES
-('5ef92a7a-f88d-4c11-9f18-9e1d4e833912', 'Bob', 'Smith', 'bob@example.com', '64b0a1f75c7b9c41b4b1fc59d27cf90e8e018f472d7ad62f4cf76a9c651f9b6a', 'user'),
-('9b6fd64e-96a3-4a7a-b8cb-d7f57b602a4e', 'Carol', 'Davis', 'carol@example.com', 'c3e6b4a951b20a06a6d1d2f9e4df9e41f5a9cfaf4804487a2f63b1b75b6a09a1', 'user'),
-('b39c9f74-5d12-4b17-9f85-6f23401d45a9', 'David', 'Miller', 'david@example.com', '0b635cf1df5f6af33171b22878a983f2e5a1a6f6c68653a12b8d1e32f4d48233', 'user'),
-('b4a21ed7-6c1a-4a92-bf3e-d4ab1e9cb8e8', 'Emma', 'Wilson', 'emma@example.com', '7e7d38a56d9e93b9b70b8f245292e7cd3d18f1f61b38228e36b6cdbca7f4dc64', 'admin'),
-('c5c4e5a4-8b2a-4f91-83f3-7d5c89e67951', 'Alice', 'Johnson', 'alice@example.com', '2ef3211ebd165fbb4a0f7b8e160170b2f1b3a6b1696c26b22d2e41a41f9c2e94', 'admin');
+('5ef92a7a-f88d-4c11-9f18-9e1d4e833912', 'Bob', 'Smith', 'bob@example.com', 'd44eec1d8afe02c819cb1a737de263637e743005c95035c2193732ca58352319', 'user'),
+('9b6fd64e-96a3-4a7a-b8cb-d7f57b602a4e', 'Carol', 'Davis', 'carol@example.com', 'd44eec1d8afe02c819cb1a737de263637e743005c95035c2193732ca58352319', 'user'),
+('b39c9f74-5d12-4b17-9f85-6f23401d45a9', 'David', 'Miller', 'david@example.com', 'd44eec1d8afe02c819cb1a737de263637e743005c95035c2193732ca58352319', 'user'),
+('b4a21ed7-6c1a-4a92-bf3e-d4ab1e9cb8e8', 'Emma', 'Wilson', 'emma@example.com', 'd44eec1d8afe02c819cb1a737de263637e743005c95035c2193732ca58352319', 'admin'),
+('c5c4e5a4-8b2a-4f91-83f3-7d5c89e67951', 'Alice', 'Johnson', 'alice@example.com', 'd44eec1d8afe02c819cb1a737de263637e743005c95035c2193732ca58352319', 'admin');
 
 -- --------------------------------------------------------
 

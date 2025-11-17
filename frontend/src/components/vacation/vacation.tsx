@@ -31,7 +31,7 @@ export default function Vacation(props: VacationProps) {
 
 
     // const userLikes= props.vacation.userLikes;
-  
+
     const navigate = useNavigate();
 
     const dispatch = useAppDispatcher();
@@ -60,10 +60,22 @@ export default function Vacation(props: VacationProps) {
         <div className={className}>
             <div><h3>{destination}</h3></div>
             <div>{likes?.length || 0}</div>
-
+            {/* 
             <div>{(new Date(startedAt)).toLocaleDateString()} to {(new Date(endedAt)).toLocaleDateString()}</div>
             <div>{description}</div>
-            <div>{price}</div>
+            <div>{price}</div> */}
+            <div className="v-dates">
+                {(new Date(startedAt)).toLocaleDateString()} ➜ {(new Date(endedAt)).toLocaleDateString()}
+            </div>
+
+            <div className="v-description">
+                {description}
+            </div>
+
+            <div className="v-price">
+                ${price}
+            </div>
+
             {imageUrl && <div><img src={imageUrl} /></div>}
             {/* conditional rendering (render something depending on a boolean value):  */}
             {isEditAllowed && <div>

@@ -2,7 +2,7 @@ import type Like from "./like"
 
 
 export default interface VacationDraft  {
-    imageUrl: string,
+    image: File
     startedAt: Date,
     endedAt: Date,
     destination: string,
