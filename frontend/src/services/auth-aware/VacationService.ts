@@ -1,6 +1,7 @@
 import type VacationDraft from "../../models/vacation-draft";
 import type Vacation from "../../models/vacation";
 import AuthAware from "./AuthAware";
+import type Like from "../../models/like";
 
 export default class VacationService extends AuthAware {
 
@@ -15,10 +16,15 @@ export default class VacationService extends AuthAware {
     }
 
     async newVacation(draft: VacationDraft): Promise<Vacation> {
-        const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft,  {
+        const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft, {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }});
+            }
+        });
+        return response.data;
+    }
+    async toggleLike(vacationId: string) {
+        const response = await this.axiosInstance.post<Like>(`/vacations/${vacationId}/like`);
         return response.data;
     }
 

@@ -16,6 +16,10 @@ declare global {
 }
 
 export default async function fileUploader(req: Request, res: Response, next: NextFunction) {
+    console.log("REQ.BODY:", req.body);
+console.log("REQ.FILES:", req.files);
+    
+    
     if (!req.files)return  next()
     if (!req.files.image)return next()
 

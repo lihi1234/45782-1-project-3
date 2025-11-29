@@ -7,11 +7,15 @@ import sequelize from './db/sequelize';
 import cors from 'cors'
 import authRouter from './routers/auth'
 import { createAppBucketIfNotExists, testUpload } from './aws/aws';
+// import multer from "multer";
+
 
 // import categoriesRouter from './routers/categories'
 // import productsRouter from './routers/products'
 
 import vacationsRouter from '../src/routers/vacations'
+import likesRouter from './routers/likes'
+import fileUpload from 'express-fileupload';
 
 const app = express()
 
@@ -26,10 +30,14 @@ app.use(cors())
 
 // post decypher middlewares
 app.use(json())
+app.use(fileUpload())
+
 
 // load routers
 app.use('/auth', authRouter)
 app.use('/vacations', vacationsRouter)
+app.use('/likes', likesRouter)
+
 
 // not found
 app.use(notFound)

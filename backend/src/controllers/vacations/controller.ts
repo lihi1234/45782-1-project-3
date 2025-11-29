@@ -5,7 +5,7 @@ import Like from "../../models/Likes";
 
 export async function getAllVacations(req: Request, res: Response, next: NextFunction) {
     try {
-        const vacations = await Vacation.findAll({include: [Like]})
+        const vacations = await Vacation.findAll({ include: [Like] })
         res.json(vacations)
     } catch (e) {
         next(e)
@@ -57,3 +57,6 @@ export async function deleteVacation(req: Request<{ id: string }>, res: Response
         next(e)
     }
 }
+
+
+

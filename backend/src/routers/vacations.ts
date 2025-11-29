@@ -13,9 +13,11 @@ const router = Router()
 
 router.get('/', getAllVacations)
 router.delete('/:id', deleteVacation)
-router.post('/', validation(newVacationValidator), fileValidation(newPostImageValidator) , fileUploader, createVacation)
+//  validation(newVacationValidator), fileValidation(newPostImageValidator) 
+router.post('/', fileUploader, createVacation)
 // router.post('/',validation(newVacationValidator), createVacation)
 router.patch('/:id', validation(updateVacationValidator),updateVacation)
+
 
 
 export default router

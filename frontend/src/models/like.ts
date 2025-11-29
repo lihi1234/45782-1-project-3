@@ -1,8 +1,8 @@
-import type User from "./user"
-import type Vacation from "./vacation-draft"
+// import type User from "./user"
+// import type Vacation from "./vacation"
 
 
 export default interface Like {
-  user:User,
-  vacation: Vacation
-};
+  userId: string;
+  vacationId: string;
+}

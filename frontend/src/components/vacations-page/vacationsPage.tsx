@@ -53,7 +53,7 @@ export default function VacationsPage() {
         <div className='VacationPage'>
      
                 {vacationsPage.map(vacation => <Vacation
-                    key={vacation.id}
+                    key={Math.random()}
                     vacation={vacation}
                     isEditAllowed={    userRole==='admin'}
                 />)}
