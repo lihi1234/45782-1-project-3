@@ -15,14 +15,38 @@ export default class VacationService extends AuthAware {
         return response.data;
     }
 
-    async newVacation(draft: VacationDraft): Promise<Vacation> {
-        const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        return response.data;
-    }
+
+    
+async newVacation(draft: VacationDraft): Promise<Vacation> {
+  const formData = new FormData();
+
+  formData.append("destination", draft.destination);
+  formData.append("description", draft.description);
+  formData.append("startedAt", draft.startedAt.toString());
+  formData.append("endedAt", draft.endedAt.toString());
+  formData.append("price", String(draft.price));
+
+  const fileList = draft.image as unknown as FileList | undefined;
+  if (fileList && fileList[0]) {
+    formData.append("image", fileList[0]); // חייב להיות "image"
+  }
+
+  const response = await this.axiosInstance.post<Vacation>(
+    "/vacations",
+    formData
+    // בלי headers – axios מזהה FormData לבד
+  );
+
+  return response.data;
+}
+    // async newVacation(draft: VacationDraft): Promise<Vacation> {
+    //     const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     });
+    //     return response.data;
+    // }
     async toggleLike(vacationId: string) {
         const response = await this.axiosInstance.post<Like>(`/vacations/${vacationId}/like`);
         return response.data;

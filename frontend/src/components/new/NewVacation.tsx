@@ -26,21 +26,19 @@ export default function NewVacation() {
 
 
     async function submit(draft: VacationDraft) {
-                draft.image = (draft.image as unknown as FileList)[0];
+  try {
+    setIsSubmitting(true);
+    const vacation = await vacationService.newVacation(draft);
+    reset();
+    dispatch(newVacation(vacation));
+    navigate("/vacations");
+  } catch (e) {
+    alert(e);
+  } finally {
+    setIsSubmitting(false);
+  }
+}
 
-        try {
-            setIsSubmitting(true);
-            const vacation = await vacationService.newVacation(draft);
-            reset();
-            dispatch(newVacation(vacation));
-                        navigate('/vacations');
-
-        } catch (e) {
-            alert(e);
-        } finally {
-            setIsSubmitting(false);
-        }
-    }
 
     return (
         <div className='NewVacation'>

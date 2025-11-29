@@ -16,6 +16,7 @@ import { createAppBucketIfNotExists, testUpload } from './aws/aws';
 import vacationsRouter from '../src/routers/vacations'
 import likesRouter from './routers/likes'
 import fileUpload from 'express-fileupload';
+import path from 'path';
 
 const app = express()
 
@@ -32,6 +33,7 @@ app.use(cors())
 app.use(json())
 app.use(fileUpload())
 
+// app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")))
 
 // load routers
 app.use('/auth', authRouter)
