@@ -13,10 +13,10 @@ import { createAppBucketIfNotExists, testUpload } from './aws/aws';
 // import categoriesRouter from './routers/categories'
 // import productsRouter from './routers/products'
 
-import vacationsRouter from '../src/routers/vacations'
+import vacationsRouter from './routers/vacations'
 import likesRouter from './routers/likes'
 import fileUpload from 'express-fileupload';
-import path from 'path';
+
 
 const app = express()
 

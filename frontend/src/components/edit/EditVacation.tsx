@@ -6,20 +6,20 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useService from '../../hooks/use-service';
 import VacationService from '../../services/auth-aware/VacationService';
-import type VacationDraft from '../../models/vacation-draft';
+// import type VacationDraft from '../../models/vacation-draft';
 import { useAppDispatcher, useAppSelector } from '../../redux/hooks';
 import { init, updateVacation } from '../../redux/vacation-slice';
 import Spinner from '../common/spinner/Spinner';
 import SpinnerButton from '../common/spinner-button/SpinnerButton';
 
 // Form type with string dates for HTML input
-type VacationFormValues = {
+export type VacationFormValues = {
     destination: string;
     description: string;
     startedAt: string; // string for <input type="date">
     endedAt: string;   // string for <input type="date">
     price: number;
-    image: File;
+    image: FileList | null;
 };
 
 export default function EditVacation() {
@@ -39,12 +39,13 @@ export default function EditVacation() {
             startedAt: '',
             endedAt: '',
             price: 0,
-            image: undefined
+            image: null
         }
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isReady, setIsReady] = useState(false);
+    const [preview, setPreview] = useState<string | null>(vacation?.imageUrl|| null);
 
     // Fetch vacations if not loaded yet
     useEffect(() => {
@@ -65,33 +66,31 @@ export default function EditVacation() {
             startedAt: new Date(vacation.startedAt).toISOString().split('T')[0],
             endedAt: new Date(vacation.endedAt).toISOString().split('T')[0],
             price: vacation.price,
-            image: vacation.image
+            image: null
         };
 
         reset(draft);
         setIsReady(true);
     }, [vacation, reset]);
 
-    // Convert string dates back to Date before submitting
+    
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreview(url);
+        }
+    };
+    
     async function submit(formValues: VacationFormValues) {
-        const draft: VacationDraft = {
-            ...formValues,
-            startedAt: new Date(formValues.startedAt),
-            endedAt: new Date(formValues.endedAt),
-            likes: vacation!.likes
-        };
-
         try {
             setIsSubmitting(true);
-            const updatedVacation = await vacationService.updateVacation(id!, draft);
+            const updatedVacation = await vacationService.updateVacation(id!, formValues);
             dispatch(updateVacation(updatedVacation));
             navigate('/vacations');
-
-
         } catch (e) {
             alert(e);
         } finally {
-
             setIsSubmitting(false);
         }
     }
@@ -141,8 +140,37 @@ export default function EditVacation() {
                     />
                     <div className='formError'>{formState.errors.price?.message}</div>
 
-                <input type="file" {...register('image')}/>
-                    <div className='formError'>{formState.errors.image?.message}</div>
+
+                    {/* {vacation?.imageUrl && (
+                        <div className="current-image">
+                            <p>Current image:</p>
+                            <img src={vacation.imageUrl} alt={vacation.destination} />
+                        </div>
+                    )} */}
+
+
+                    <input
+                    type="file"
+                    accept="image/*"
+                    {...register("image")}
+                    onChange={(e) => {
+                        register("image").onChange(e);
+                        handleImageChange(e);
+                    }}
+                />
+                <div className='formError'>{formState.errors.image?.message}</div>
+                {preview && (
+                    <img
+                        src={preview}
+                        style={{
+                            width: "120px",
+                            height: "120px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            marginTop: "10px",
+                        }}
+                    />
+                )}
 
                     <SpinnerButton
                         buttonText='Update Vacation'

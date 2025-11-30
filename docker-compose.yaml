@@ -1,18 +1,60 @@
-# version: '3.8'
-name: Lihi-test-03
-# services - here i am going to list containers that i want to build
-# each service, actually describes a docker run command
+# # version: '3.8'
+# name: Lihi-project-03
+# # services - here i am going to list containers that i want to build
+# # each service, actually describes a docker run command
+# services:
+#   # docker run --name weezer-db -d -e MYSQL_ALLOW_EMPTY_PASSWORD=1 -e MYSQL_DATABASE=weezer -e MYSQL_TCP_PORT=3306 -p 3308:3306 shaharsol/weezer-db:1.0.0
+#   database:
+#     container_name: Lihi-Barlev-project-03-db-compose
+#     environment:
+#       - MYSQL_ALLOW_EMPTY_PASSWORD=1
+#       - MYSQL_DATABASE=AM-PM
+#       - MYSQL_TCP_PORT=3306
+#     ports:
+#       - "3309:3306"
+#     #image: shaharsol/weezer-db:1.0.0
+#     build: ./database
+#     healthcheck:
+#       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+#       interval: 1m30s
+#       timeout: 30s
+#       retries: 5
+#       start_period: 30s
+  
+#   # docker run --name weezer-backend -d -e NODE_ENV=docker  -p 3010:3000 shaharsol/weezer-backend:3.0.0
+#   backend:
+#     container_name: Lihi-project-03-backend-compose
+#     environment:
+#       - NODE_ENV=compose
+#     ports:
+#       - "3020:3000"
+#     build: ./backend
+#     depends_on:
+#       database:
+#         condition: service_healthy
+        
+# # docker run --name weezer-frontend -d -p 3011:5173 shaharsol/weezer-frontend:1.0.1
+#   frontend:
+#     container_name: Lihi-project-03-frontend-compose
+#     ports: 
+#       - 3012:80
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile.compose
+ 
+
+name: Lihi-project-03
+
 services:
-  # docker run --name weezer-db -d -e MYSQL_ALLOW_EMPTY_PASSWORD=1 -e MYSQL_DATABASE=weezer -e MYSQL_TCP_PORT=3306 -p 3308:3306 shaharsol/weezer-db:1.0.0
+  # ===================== DB =====================
   database:
-    container_name: Lihi-Barlev-test-03-db-compose
+    container_name: Lihi-Barlev-project-03-db-compose
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
       - MYSQL_DATABASE=AM-PM
       - MYSQL_TCP_PORT=3306
     ports:
       - "3309:3306"
-    #image: shaharsol/weezer-db:1.0.0
     build: ./database
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
@@ -20,25 +62,50 @@ services:
       timeout: 30s
       retries: 5
       start_period: 30s
-  
-  # docker run --name weezer-backend -d -e NODE_ENV=docker  -p 3010:3000 shaharsol/weezer-backend:3.0.0
+
+  # ===================== LocalStack (S3) =====================
+  localstack:
+    image: localstack/localstack:latest
+    container_name: Lihi-project-03-localstack
+    ports:
+      - "4566:4566"          # שתוכלי גם מהמחשב לדבר עם זה אם צריך
+    environment:
+      - SERVICES=s3          # רק S3
+      - DEFAULT_REGION=us-east-1
+      - DEBUG=1
+    volumes:
+      - "./.localstack:/var/lib/localstack"
+
+  # ===================== Backend =====================
   backend:
-    container_name: Lihi-test-03-backend-compose
+    container_name: Lihi-project-03-backend-compose
+    build: ./backend
     environment:
       - NODE_ENV=compose
+
+      # --- DB (תוודאי שהקונפיג של Sequelize קורא מה־ENV האלה) ---
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=AM-PM
+      - DB_USER=root
+      - DB_PASSWORD=
+
+      # --- S3 / LocalStack ---
+      - AWS_REGION=us-east-1
+      - S3_ENDPOINT=http://localstack:4566
     ports:
       - "3020:3000"
-    build: ./backend
     depends_on:
       database:
         condition: service_healthy
-        
-# docker run --name weezer-frontend -d -p 3011:5173 shaharsol/weezer-frontend:1.0.1
+      localstack:
+        condition: service_started
+
+  # ===================== Frontend =====================
   frontend:
-    container_name: Lihi-test-03-frontend-compose
-    ports: 
-      - 3012:80
+    container_name: Lihi-project-03-frontend-compose
+    ports:
+      - "3012:80"
     build:
       context: ./frontend
       dockerfile: Dockerfile.compose
-

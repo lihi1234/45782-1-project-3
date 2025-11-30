@@ -28,9 +28,9 @@ const router = Router()
 router.get('/', getAllVacations)
 router.delete('/:id', deleteVacation)
 //  validation(newVacationValidator), fileValidation(newPostImageValidator) 
-router.post('/', fileUploader, createVacation)
+router.post('/', validation(newVacationValidator),fileUploader, createVacation)
 // router.post('/',validation(newVacationValidator), createVacation)
-router.patch('/:id', validation(updateVacationValidator),updateVacation)
+router.put('/:id', validation(updateVacationValidator),fileUploader,updateVacation)
 
 
 

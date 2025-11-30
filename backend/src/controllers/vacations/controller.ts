@@ -43,75 +43,86 @@ export async function createVacation(
   }
 }
 
-// export async function createVacation(req: Request, res: Response, next: NextFunction) {
-
-//     // const upload = multer({
-//     //     storage: multer.diskStorage({
-//     //         destination: "uploads",
-//     //         filename: (req, file, cb) => {
-//     //             const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     //             const ext = path.extname(file.originalname);
-//     //             cb(null, uniqueSuffix + ext);
-//     //         },
-//     //     }),
-//     // });
 
 
-//     // upload.single("image"), // השם "image" חייב להתאים ל-name של ה-input בצד לקוח
-//         async (req, res, next) => {
-//             try {
-//                 const { destination, description, startedAt, endedAt, price } = req.body;
+export async function updateVacation(
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const vacation = await Vacation.findByPk(req.params.id);
 
-//                 let imageUrl: string | null = null;
-//                 if (req.file) {
-//                     // אם את רוצה URL יחסי:
-//                     imageUrl = `/uploads/${req.file.filename}`;
-//                 }
-
-//                 const vacation = await Vacation.create({
-//                     destination,
-//                     description,
-//                     startedAt,
-//                     endedAt,
-//                     price,
-//                     imageUrl, // נשמר ב-DB
-//                 });
-
-//                 res.status(201).json(vacation);
-//             } catch (e) {
-//                 next(e);
-//             }
-//         }
-
-//     // try {
-//     //     const newVacation = await Vacation.create({ ...req.body })
-//     //     // await newVacation.reload(postIncludes)
-//     //     res.json(newVacation)
-//     // } catch (e) {
-//     //     next(e)
-//     // }
-// }
-
-export async function updateVacation(req: Request<{ id: string }>, res: Response, next: NextFunction) {
-    try {
-        const vacation = await Vacation.findByPk(req.params.id);
-        if (!vacation) {
-            return res.status(404).json({ error: 'Vacation not found' });
-        }
-        const { destination, description, imageUrl, price, endedAt, startedAt } = req.body
-        vacation.destination = destination
-        vacation.description = description
-        vacation.startedAt = startedAt
-        vacation.endedAt = endedAt
-        vacation.price = price
-        vacation.imageUrl = imageUrl
-
-        await vacation.save()
-        res.json(vacation)
-    } catch (e) {
-        next(e)
+    if (!vacation) {
+      return res.status(404).json({ error: "Vacation not found" });
     }
+
+    // מגיעים מה-body (אם זה לא multipart עם קובץ)
+    const { destination, description, imageUrl, price, endedAt, startedAt } = req.body;
+
+    // מגיע מה-fileUploader אם הועלה קובץ
+    const uploadedImageUrl = (req as any).imageUrl;
+
+    // נעדיף את מה שהגיע מה-upload, ואם אין – מה-body
+    const finalImageUrl = uploadedImageUrl ?? imageUrl;
+
+    console.log("body.imageUrl:", imageUrl);
+    console.log("req.imageUrl (from upload):", uploadedImageUrl);
+    console.log("finalImageUrl:", finalImageUrl);
+
+    if (destination !== undefined) {
+      vacation.destination = destination;
+    }
+
+    if (description !== undefined) {
+      vacation.description = description;
+    }
+
+    if (startedAt !== undefined) {
+      vacation.startedAt = new Date(startedAt);
+    }
+
+    if (endedAt !== undefined) {
+      vacation.endedAt = new Date(endedAt);
+    }
+
+    if (price !== undefined) {
+      vacation.price = price;
+    }
+
+    if (finalImageUrl !== undefined) {
+      vacation.imageUrl = finalImageUrl;
+    }
+
+    console.log("after vacation.imageUrl:", vacation.imageUrl);
+    console.log("changed imageUrl?", vacation.changed("imageUrl"));
+
+    await vacation.save();
+    return res.json(vacation);
+  } catch (e) {
+    next(e);
+  }
 }
+// export async function updateVacation(req: Request<{ id: string }>, res: Response, next: NextFunction) {
+//     try {
+//         const vacation = await Vacation.findByPk(req.params.id);
+//         if (!vacation) {
+//             return res.status(404).json({ error: 'Vacation not found' });
+//         }
+//         const { destination, description, imageUrl, price, endedAt, startedAt } = req.body
+//         vacation.destination = destination
+//         vacation.description = description
+//         vacation.startedAt = startedAt
+//         vacation.endedAt = endedAt
+//         vacation.price = price
+//         vacation.imageUrl = imageUrl
+
+//         await vacation.save()
+//         res.json(vacation)
+//     } catch (e) {
+//         next(e)
+//     }
+// }
 
 export async function deleteVacation(req: Request<{ id: string }>, res: Response, next: NextFunction) {
     try {

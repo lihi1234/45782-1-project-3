@@ -1,7 +1,8 @@
 import type VacationDraft from "../../models/vacation-draft";
 import type Vacation from "../../models/vacation";
 import AuthAware from "./AuthAware";
-import type Like from "../../models/like";
+// import type Like from "../../models/like";
+import type { VacationFormValues } from "../../components/edit/EditVacation";
 
 export default class VacationService extends AuthAware {
 
@@ -39,26 +40,30 @@ async newVacation(draft: VacationDraft): Promise<Vacation> {
 
   return response.data;
 }
-    // async newVacation(draft: VacationDraft): Promise<Vacation> {
-    //     const response = await this.axiosInstance.post<Vacation>(`/vacations`, draft, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     });
-    //     return response.data;
-    // }
-    async toggleLike(vacationId: string) {
-        const response = await this.axiosInstance.post<Like>(`/vacations/${vacationId}/like`);
-        return response.data;
+    
+   
+
+    async updateVacation(id: string, formValues: VacationFormValues): Promise<Vacation> {
+    const formData = new FormData();
+
+    formData.append("destination", formValues.destination);
+    formData.append("description", formValues.description);
+    formData.append("startedAt", formValues.startedAt);
+    formData.append("endedAt", formValues.endedAt);
+    formData.append("price", String(formValues.price));
+
+    // רק אם המשתמש העלה תמונה חדשה
+    if (formValues.image && formValues.image[0]) {
+        formData.append("image", formValues.image[0]);
     }
 
-    // async getPost(id: string): Promise<Post> {
-    //     const response = await this.axiosInstance<Post>(`/profile/${id}`);
-    //     return response.data;
-    // }
+    const response = await this.axiosInstance.put<Vacation>(
+        `/vacations/${id}`,
+        formData
+        // לא צריך headers – axios יודע לבד שזה FormData
+    );
 
-    async updateVacation(id: string, draft: VacationDraft): Promise<Vacation> {
-        const response = await this.axiosInstance.patch<Vacation>(`/vacations/${id}`, draft);
-        return response.data;
-    }
+    return response.data;
+}
+
 }

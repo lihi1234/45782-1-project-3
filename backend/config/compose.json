@@ -1,5 +1,20 @@
 {
-    "db": {
-        "host": "database"
+  "db": {
+    "host": "database",
+    "port": 3306,
+    "username": "root",
+    "password": "",
+    "database": "book_king"
+  },
+  "s3": {
+    "connection": {
+      "endpoint": "http://localstack:4566",
+      "region": "us-east-1",
+      "credentials": {
+        "accessKeyId": "test",
+        "secretAccessKey": "test"
+      },
+      "forcePathStyle": true
     }
+  }
 }

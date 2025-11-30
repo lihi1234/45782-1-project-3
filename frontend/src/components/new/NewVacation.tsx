@@ -22,22 +22,31 @@ export default function NewVacation() {
     const dispatch = useAppDispatcher();
 
     const vacationService = useService(VacationService);
-        const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreview(url);
+        }
+    };
 
 
     async function submit(draft: VacationDraft) {
-  try {
-    setIsSubmitting(true);
-    const vacation = await vacationService.newVacation(draft);
-    reset();
-    dispatch(newVacation(vacation));
-    navigate("/vacations");
-  } catch (e) {
-    alert(e);
-  } finally {
-    setIsSubmitting(false);
-  }
-}
+        try {
+            setIsSubmitting(true);
+            const vacation = await vacationService.newVacation(draft);
+            reset();
+            dispatch(newVacation(vacation));
+            navigate("/vacations");
+        } catch (e) {
+            alert(e);
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
 
 
     return (
@@ -64,29 +73,52 @@ export default function NewVacation() {
 
 
 
-                    <input
-                        type='date'
-                        {...register('startedAt', { required: { value: true, message: 'start is required' } })}
-                    />
-                    <div className='formError'>{formState.errors.startedAt?.message}</div>
+                <input
+                    type='date'
+                    {...register('startedAt', { required: { value: true, message: 'start is required' } })}
+                />
+                <div className='formError'>{formState.errors.startedAt?.message}</div>
 
-                    <input
-                        type='date'
-                        {...register('endedAt', { required: { value: true, message: 'end is required' } })}
-                    />
-                    <div className='formError'>{formState.errors.endedAt?.message}</div>
+                <input
+                    type='date'
+                    {...register('endedAt', { required: { value: true, message: 'end is required' } })}
+                />
+                <div className='formError'>{formState.errors.endedAt?.message}</div>
 
-                    <input
-                        type='number' step="0.01"
-                        {...register('price', {
-                            required: { value: true, message: 'price is required' },
-                            min: { value: 0, message: 'price must be positive' }
-                        })}
-                    />
-                    <div className='formError'>{formState.errors.price?.message}</div>
+                <input
+                    type='number' step="0.01"
+                    {...register('price', {
+                        required: { value: true, message: 'price is required' },
+                        min: { value: 0, message: 'price must be positive' }
+                    })}
+                />
+                <div className='formError'>{formState.errors.price?.message}</div>
 
-                <input type="file" {...register('image')}/>
-                    <div className='formError'>{formState.errors.image?.message}</div>
+                <input
+                    type="file"
+                    accept="image/*"
+                    {...register("image")}
+                    onChange={(e) => {
+                        register("image").onChange(e);
+                        handleImageChange(e);
+                    }}
+                />
+                <div className='formError'>{formState.errors.image?.message}</div>
+                {preview && (
+                    <img
+                        src={preview}
+                        style={{
+                            width: "120px",
+                            height: "120px",
+                            objectFit: "cover",
+                            borderRadius: "8px",
+                            marginTop: "10px",
+                        }}
+                    />
+                )}
+
+
+
 
 
                 <SpinnerButton
